@@ -23,21 +23,21 @@ class MyFrame(ctk.CTkFrame):
 
         # add widgets onto the frame, for example:
         self.label = ctk.CTkLabel(self, text="")
-        self.label.grid(row=1, column=0, padx=0, pady= (80, 0), sticky="sew")
+        self.label.grid(row=1, column=0, padx=0, pady= (0, 20), sticky="snew")
 
-        entry = ctk.CTkEntry(self, placeholder_text="CTkEntry", width=70)
-        entry.grid(row=0, column=0, padx=20, pady=10)
+        entry = ctk.CTkEntry(self, placeholder_text="1", width=70)
+        entry.grid(row=0, column=0, padx=20, pady=25)
         entry.configure(state="disabled")
 
-        entry2 = ctk.CTkEntry(self, placeholder_text="CTkEntry", width=70)
-        entry2.grid(row=0, column=1, padx=20, pady=10)
+        entry2 = ctk.CTkEntry(self, placeholder_text="1", width=70)
+        entry2.grid(row=0, column=1, padx=20, pady=25)
         entry2.configure(state="disabled")
 
-        button = ctk.CTkButton(self, text="Flip", width=40, height=35)
-        button.grid(row=1, column=0, padx=30, pady=10)
+        button = ctk.CTkButton(self, text="Flip", width=45, height=25)
+        button.grid(row=1, column=0, padx=30, pady=0)
 
-        button2 = ctk.CTkButton(self, text="Roll", width=40, height=35)
-        button2.grid(row=1, column=1, padx=30, pady=10)
+        button2 = ctk.CTkButton(self, text="Roll", width=45, height=25)
+        button2.grid(row=1, column=1, padx=30, pady=0)
 
 
 
@@ -79,11 +79,14 @@ class TabView(ctk.CTkTabview):
         button = ctk.CTkButton(self.tab("Counter"), text="+", font=custom_font2, width=40, height=35)
         button2 = ctk.CTkButton(self.tab("Counter"), text="-", font=custom_font2, width=40, height=35)
         button3 = ctk.CTkButton(self.tab("Counter"), text="Color", font=custom_font2, width=40, height=35)
+        button4 = ctk.CTkButton(self.tab("Timer"), text="Start", font=custom_font2, width=40, height=35)
         # button.grid(row=0, column=0, padx=0, pady=0, sticky="n")
         button.place(relx=0.8, rely=1.0, anchor=tk.SW)
         button2.place(relx=0.2, rely=1.0, anchor=tk.SE)
         button3.place(relx=0.5, rely=1.0, anchor=tk.S)
-        
+        button4.place(relx=0.5, rely=1.0, anchor=tk.S)
+
+       
         
 
         
@@ -95,36 +98,41 @@ class TabView(ctk.CTkTabview):
 class App(ctk.CTk, tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        self.geometry("600x300")
-        self.grid_rowconfigure((0, 2), weight=1)  # configure grid system
+        self.geometry("650x400")
+        self.grid_rowconfigure((0, 3), weight=2)  # configure grid system
         self.grid_columnconfigure(1, weight=1) 
         
 
         self.my_frame = TabView(self)
-        self.my_frame.grid(row=0, column=0, padx=0, pady=0, sticky="w")
+        self.my_frame.grid(row=1, column=0, padx=20, pady=0, sticky="w")
         #button
         
-        button = ctk.CTkButton(self, text="CTkButton", command= self.button_function)
-        # button.grid_rowconfigure(0, weight=1)
-        button.grid(row=1, column=0, padx=80, pady=0, sticky="wn")
+        
 
         # button2 = ctk.CTkButton(self, text="Flip", command= self.button_function, width=40, height=35)
         # button2.grid(row=0, column=1, padx=80, pady=0)
 
         # button3 = ctk.CTkButton(self, text="Roll", command= self.button_function, width=40, height=35)
         self.other_frame = MyFrame(self)
-        self.other_frame.grid(row=0, column=1, padx=0, pady=0, sticky="s")
+        self.other_frame.grid(row=1, column=1, padx=0, pady=0)
         
-        
+        button5 = ctk.CTkButton(self, text="CTkButton", command= self.button_function, height=35)
+        button5.grid(row=2, column=0, padx=0, pady=0)
 
 
     def button_function(self):
         print("button pressed")
+        
+        
+
+
+    
 
 
 
 app = App()
 app.title('Taco Bell')
+app.resizable(0, 0)
 
 app.mainloop()
 
