@@ -118,7 +118,16 @@ class App(ctk.CTk, tk.Frame):
         
         button5 = ctk.CTkButton(self, text="CTkButton", command= self.button_function, height=35)
         button5.grid(row=2, column=0, padx=0, pady=0)
+        
+        segemented_button = ctk.CTkSegmentedButton(self, values=["Value 1", "Value 2", "Value 3"],
+                                                     command=self.segmented_button_callback, height=10)
+        segemented_button.set("Value 1")
+        segemented_button.grid(row=0, column=0, padx=0, pady=0, sticky="snew")
 
+    def segmented_button_callback(self, taco):
+        print("segmented button clicked:", taco)
+
+    
 
     def button_function(self):
         print("button pressed")
