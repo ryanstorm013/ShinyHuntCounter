@@ -12,33 +12,52 @@ ctk.set_window_scaling(1)
 
 
 class MyFrame(ctk.CTkFrame):
+
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         
-
-        self.text_var = ctk.StringVar(value=0)
+        def flip_Function():
+            roll = random.randint(0, 1)
+            if(roll == 0):
+                text_var.set("Heads")
+            else:
+                text_var.set("Tails")
+            
         
+        def dice_function():
+            text_var2.set(random.randint(1, 6))
+        
+
         # add widgets onto the frame, for example:
         self.label = ctk.CTkLabel(self, text="")
         self.label.grid(row=1, column=0, padx=0, pady= (0, 20), sticky="snew")
 
-        entry = ctk.CTkEntry(self, placeholder_text=self.text_var, width=70)
+        
+
+        button = ctk.CTkButton(self, text="Flip", width=45, height=25, command= flip_Function)
+        button.grid(row=1, column=0, padx=30, pady=0)
+
+        button2 = ctk.CTkButton(self, text="Roll", width=45, height=25, command= dice_function)
+        button2.grid(row=1, column=1, padx=30, pady=0)
+
+        text_var = ctk.StringVar()
+        text_var2 = ctk.IntVar()
+
+        entry = ctk.CTkEntry(self, textvariable= text_var, width=70)
         entry.grid(row=0, column=0, padx=20, pady=25)
         entry.configure(state="disabled")
 
-        entry2 = ctk.CTkEntry(self, placeholder_text="1", width=70)
+        entry2 = ctk.CTkEntry(self, textvariable= text_var2, width=70)
         entry2.grid(row=0, column=1, padx=20, pady=25)
         entry2.configure(state="disabled")
 
-        button = ctk.CTkButton(self, text="Flip", width=45, height=25, command=self.flipFunction)
-        button.grid(row=1, column=0, padx=30, pady=0)
+        
+    
+        
+        # return num
 
-        button2 = ctk.CTkButton(self, text="Roll", width=45, height=25)
-        button2.grid(row=1, column=1, padx=30, pady=0)
-
-    def flipFunction(self):
-        coinFlip = random.randint(1, 2)
-        pass
+        
+        
 
 
 
@@ -60,10 +79,10 @@ class TabViewTime(ctk.CTkTabview):
         
         
 
-        self.text_var = ctk.StringVar(value=0)
+        self.text_var = ctk.IntVar(value=0)
 
         self.label = ctk.CTkLabel(master=self.tab("Counter"),
-                               textvariable=self.text_var,
+                               textvariable=self.text_var.get(),
                                font=custom_font,
                                width=250,
                                height=150,
