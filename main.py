@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import colorchooser
 import customtkinter as ctk
 from PIL import Image
 import random
@@ -52,11 +53,6 @@ class MyFrame(ctk.CTkFrame):
         entry2.configure(state="disabled")
 
         
-    
-        
-        # return num
-
-        
         
 
 
@@ -77,16 +73,34 @@ class TabViewTime(ctk.CTkTabview):
         self.add("Counter")
         self.add("Timer")
         
+        def color():
+            my_color = colorchooser.askcolor()[1]
+            self.string_var.set(my_color)
         
+        
+                
+        self.button = ctk.CTkButton(self.tab("Counter"), text="+", font=custom_font2, width=40, height=35,
+                               command=self.counter)
+
+        self.button2 = ctk.CTkButton(self.tab("Counter"), text="-", font=custom_font2, width=40, height=35,
+                                command=self.counter)
+        button3 = ctk.CTkButton(self.tab("Counter"), text="Color", font=custom_font2, width=40, height=35, command=color)
+        button4 = ctk.CTkButton(self.tab("Timer"), text="Start", font=custom_font2, width=40, height=35)
+        # button.grid(row=0, column=0, padx=0, pady=0, sticky="n")
+        self.button.place(relx=0.8, rely=1.0, anchor=tk.SW)
+        self.button2.place(relx=0.2, rely=1.0, anchor=tk.SE)
+        button3.place(relx=0.5, rely=1.0, anchor=tk.S)
+        button4.place(relx=0.5, rely=1.0, anchor=tk.S)
 
         self.text_var = ctk.IntVar(value=0)
-
+        self.string_var = ctk.StringVar()
+        
         self.label = ctk.CTkLabel(master=self.tab("Counter"),
                                textvariable=self.text_var.get(),
                                font=custom_font,
                                width=250,
                                height=150,
-                               fg_color=("white", "black")
+                               fg_color= ("white", "black")
                                 )
         self.label.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
@@ -95,36 +109,21 @@ class TabViewTime(ctk.CTkTabview):
                                font=custom_font,
                                width=250,
                                height=150,
-                               fg_color=("white", "black")
+                               fg_color= ("black", "white")
                                 )
-        
         label2.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
-                
-        self.button = ctk.CTkButton(self.tab("Counter"), text="+", font=custom_font2, width=40, height=35,
-                               command=self.counter)
 
-        self.button2 = ctk.CTkButton(self.tab("Counter"), text="-", font=custom_font2, width=40, height=35,
-                                command=self.counter)
-        button3 = ctk.CTkButton(self.tab("Counter"), text="Color", font=custom_font2, width=40, height=35)
-        button4 = ctk.CTkButton(self.tab("Timer"), text="Start", font=custom_font2, width=40, height=35)
-        # button.grid(row=0, column=0, padx=0, pady=0, sticky="n")
-        self.button.place(relx=0.8, rely=1.0, anchor=tk.SW)
-        self.button2.place(relx=0.2, rely=1.0, anchor=tk.SE)
-        button3.place(relx=0.5, rely=1.0, anchor=tk.S)
-        button4.place(relx=0.5, rely=1.0, anchor=tk.S)
-
-
-    def clickedPlus(self):
-        plus = self.button.cget("text")
-        # text = self.text_var.get("value")
-        self.text_var.set(3)
-        # print(text)
-        return plus
+    # def clickedPlus(self):
+    #     plus = self.button.cget("text")
+    #     # text = self.text_var.get("value")
+    #     self.text_var.set(3)
+    #     # print(text)
+    #     return plus
     
-    def clickedMinus(self):
-        minus = self.button.cget("text")
-        print("-")
-        return minus
+    # def clickedMinus(self):
+    #     minus = self.button.cget("text")
+    #     print("-")
+    #     return minus
     
     def counter(self):
         num = 0
@@ -135,25 +134,12 @@ class TabViewTime(ctk.CTkTabview):
             num -= 1
 
         return self.text_var.set(num)
+    
+    
 
             
     
-   
-
-    
-
-
         
-
-        
-        
-
-        
-
-        
-        
-
-
 class App(ctk.CTk, tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -198,7 +184,7 @@ class App(ctk.CTk, tk.Frame):
 
 
 app = App()
-app.title('Taco Bell')
+app.title('Shny Counter')
 app.resizable(0, 0)
 
 app.mainloop()
