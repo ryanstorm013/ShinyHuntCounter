@@ -74,8 +74,16 @@ class TabViewTime(ctk.CTkTabview):
         self.add("Timer")
         
         def color():
-            my_color = colorchooser.askcolor()[1]
-            self.string_var.set(my_color)
+            my_color = colorchooser.askcolor("black")
+            valueStore = my_color[1]
+
+            try: 
+                self.label.configure(fg_color=valueStore)
+                self.label2.configure(fg_color=valueStore)
+            except ValueError:
+                print("None Selected")
+            
+            
         
         
                 
@@ -93,25 +101,27 @@ class TabViewTime(ctk.CTkTabview):
         button4.place(relx=0.5, rely=1.0, anchor=tk.S)
 
         self.text_var = ctk.IntVar(value=0)
-        self.string_var = ctk.StringVar()
-        
+        self.string_var = ctk.StringVar(value="black")
+
         self.label = ctk.CTkLabel(master=self.tab("Counter"),
                                textvariable=self.text_var.get(),
                                font=custom_font,
                                width=250,
                                height=150,
-                               fg_color= ("white", "black")
+                               fg_color=("black", "white"),
+                               text_color=("white", "black")
                                 )
         self.label.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
-        label2 = ctk.CTkLabel(master=self.tab("Timer"),
+        self.label2 = ctk.CTkLabel(master=self.tab("Timer"),
                                textvariable=self.text_var,
                                font=custom_font,
                                width=250,
                                height=150,
-                               fg_color= ("black", "white")
+                               fg_color=("black", "white"),
+                               text_color=("white", "black")
                                 )
-        label2.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        self.label2.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
     # def clickedPlus(self):
     #     plus = self.button.cget("text")
@@ -137,7 +147,30 @@ class TabViewTime(ctk.CTkTabview):
     
     
 
+def segmented_button():
+    def segmented_button_callback(setting): 
+
+        if setting == "Dark":
+            ctk.set_appearance_mode("dark")
+
+        elif setting == "Light":
+            ctk.set_appearance_mode("light") 
+
+        else:
+            ctk.set_appearance_mode("system")
             
+    my_button = ctk.CTkSegmentedButton(master=None, values=["Dark", "Light"],
+                                                     command=segmented_button_callback, corner_radius=20, selected_color=("#E7F6F2", "#395B64"), text_color=("black", "white"))
+
+    my_button.set("Value 1")
+    my_button.grid(row=0, column=0, padx=0, pady=10, sticky="snew")
+            # Modes: system (default), light, dark
+
+    
+
+    
+
+
     
         
 class App(ctk.CTk, tk.Frame):
@@ -159,20 +192,9 @@ class App(ctk.CTk, tk.Frame):
         button5 = ctk.CTkButton(self, text="Reset", command= self.button_function, height=35)
         button5.grid(row=2, column=0, padx=20, pady=20)
         
-        segemented_button = ctk.CTkSegmentedButton(self, values=["Dark", "Light"],
-                                                     command=self.segmented_button_callback, corner_radius=20, selected_color=("#E7F6F2", "#395B64"), text_color=("black", "white"))
-        segemented_button.set("Value 1")
-        segemented_button.grid(row=0, column=0, padx=0, pady=10, sticky="snew")
+        segmented_button()
     
-    # Modes: system (default), light, dark
-    def segmented_button_callback(self, taco):
-        if taco == "Dark":
-            ctk.set_appearance_mode("dark")
 
-        elif taco == "Light":
-            ctk.set_appearance_mode("light") 
-        else:
-            ctk.set_appearance_mode("system")
 
     
 
