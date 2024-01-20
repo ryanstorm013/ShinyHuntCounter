@@ -22,7 +22,7 @@ class TimerTime(ctk.CTkTabview):
 
             self.running = False    #Defailt Running
             self.start_time = None  #Default Start Time
-            
+            self.pause_time = None
 
             self.button4 = ctk.CTkButton(taby, text="Start", font=custom_font2, width=40, height=35, command=self.stopngo)
         
@@ -48,11 +48,16 @@ class TimerTime(ctk.CTkTabview):
 
         def stopngo(self):
             if not self.running:
-                self.start_time = datetime.now()
+                if self.start_time is None:
+                    self.start_time = datetime.now()
+                else:
+                    paused_time = datetime.now() - self.pause_time
+                    self.start_time += paused_time
                 self.running = True
                 self.button4.configure(text="Stop")
                 self.update_time()
             else:
+                self.pause_time = datetime.now()
                 self.running = False
                 self.button4.configure(text="Start")
 
