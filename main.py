@@ -1,17 +1,15 @@
 import tkinter as tk
-from tkinter import colorchooser
 import customtkinter as ctk
 from PIL import Image
 from myFrame import *
 from segButton import *
-from datetime import datetime
 from tab import *
 
 # import ttkbootstrap as ttk
 
 
 ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 ctk.set_window_scaling(1)
 
         

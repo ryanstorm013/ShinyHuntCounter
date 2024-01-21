@@ -9,8 +9,7 @@ class TabViewTime(ctk.CTkTabview):
         custom_font =("Times",50,'bold')
         custom_font2 =("Times",20,'bold')
         # add widgets onto the frame, for example:
-        self.label = ctk.CTkLabel(self, text="")
-        self.label.grid(row=0, column=0, padx=(20, 20), pady=0, sticky="sn")
+
         
         my_tabs = ["Counter", "Timer"]
 
@@ -18,23 +17,31 @@ class TabViewTime(ctk.CTkTabview):
         timeTab = self.add(my_tabs[1])
         
         
-        
-        
-        
         def color():
             my_color = colorchooser.askcolor("black")
             valueStore = my_color[1]
-
-            try: 
-                self.label.configure(fg_color=valueStore)
-                self.label2.configure(fg_color=valueStore)
+            # print(my_color)
+            try:
+                if valueStore == '#000000' or valueStore == '#ffffff':
+                    default()
+                else:
+                    self.tabCounter.configure(fg_color=valueStore)
+                    self.tabTime.configure(fg_color=valueStore)
             except ValueError:
                 pass
+        
+        def default():
+            self.tabCounter.configure(fg_color=("black", "white"), text_color=("white", "black"))
+            self.tabTime.configure(fg_color=("black", "white"), text_color=("white", "black"))
+
+        def transparent():
+            self.tabCounter.configure(fg_color=("transparent"), text_color=("black", "white"))
+            self.tabTime.configure(fg_color=("transparent"), text_color=("black", "white"))
 
         def plus():
             current_value = self.text_var.get()
             self.text_var.set(current_value + 1)
-            self.label.configure(text=str(self.text_var.get()))
+            self.tabCounter.configure(text=str(self.text_var.get()))
             
             
         def minus():
@@ -43,12 +50,12 @@ class TabViewTime(ctk.CTkTabview):
                 self.text_var.set(0)
             else:
                 self.text_var.set(current_value - 1)
-                self.label.configure(text=str(self.text_var.get()))
+                self.tabCounter.configure(text=str(self.text_var.get()))
 
             
         self.text_var = ctk.IntVar()
 
-        self.label = ctk.CTkLabel(master=counterTab,
+        self.tabCounter = ctk.CTkLabel(master=counterTab,
                                                   
                                font=custom_font,
                                text=str(self.text_var.get()),
@@ -59,23 +66,23 @@ class TabViewTime(ctk.CTkTabview):
                                 )
 
 
-        self.label.grid(row=0, column=0, padx=30, pady=0)
+        self.tabCounter.grid(row=0, column=0, padx=30, pady=20)
                 
-        self.button = ctk.CTkButton(self.tab("Counter"), text="+", font=custom_font2, width=30, height=25,
-                               command=plus)
+        self.buttonPlus = ctk.CTkButton(self.tab("Counter"), text="+", font=("Times",30,'bold'), width=40, height=25,
+                               command=plus, fg_color="#5cb85c", text_color="black" )
 
-        self.button2 = ctk.CTkButton(self.tab("Counter"), text="-", font=custom_font2, width=30, height=25,
-                                command=minus)
+        self.buttonMinus = ctk.CTkButton(self.tab("Counter"), text="-", font=("Times",30,'bold'), width=40, height=25,
+                                command=minus, fg_color="#d9534f", text_color="black" )
         
 
-        self.button.grid(row=1, column=0, padx=30, pady=0)
-        self.button.place(relx=0.9, rely=0.7, anchor=tk.SE)
+        self.buttonPlus.grid(row=1, column=0, padx=30, pady=0)
+        self.buttonPlus.place(relx=0.9, rely=0.75, anchor=tk.SE)
 
-        self.button2.grid(row=1, column=0, padx=0, pady=0)
-        self.button2.place(relx=0.1, rely=0.7, anchor=tk.SW)
+        self.buttonMinus.grid(row=1, column=0, padx=0, pady=0)
+        self.buttonMinus.place(relx=0.1, rely=0.75, anchor=tk.SW)
 
-        button5 = ctk.CTkButton(counterTab, text="Reset", height=35, command= self.reset)
-        button5.grid(row=2, column=0, padx=0, pady=35)
+        counterReset = ctk.CTkButton(counterTab, text="Reset", height=35, command= self.reset)
+        counterReset.grid(row=2, column=0, padx=0, pady=35)
 
 
 
@@ -88,9 +95,9 @@ class TabViewTime(ctk.CTkTabview):
         self.start_time = None  #Default Start Time
         self.pause_time = None
 
-        self.button4 = ctk.CTkButton(timeTab, text="Start", font=custom_font2, width=40, height=25, command=self.stopngo)
-        self.button4.grid(row=1, column=0, padx=30, pady=0)
-        self.button4.place(relx=0.5, rely=0.71, anchor=tk.S)
+        self.stopStart = ctk.CTkButton(timeTab, text="Start", font=custom_font2, width=40, height=25, command=self.stopngo, fg_color="#5cb85c")
+        self.stopStart.grid(row=1, column=0, padx=30, pady=0)
+        self.stopStart.place(relx=0.5, rely=0.71, anchor=tk.S)
 
 
         self.button6 = ctk.CTkButton(timeTab, text="Reset", height=35, command= self.timeReset)
@@ -98,7 +105,7 @@ class TabViewTime(ctk.CTkTabview):
 
         self.string_var = ctk.StringVar(value="black")
 
-        self.label2 = ctk.CTkLabel(timeTab,
+        self.tabTime = ctk.CTkLabel(timeTab,
                                 font=("Times",40,'bold'),
                                 
                                 text="0:00:00.000",
@@ -107,17 +114,27 @@ class TabViewTime(ctk.CTkTabview):
                                 fg_color=("black", "white"),
                                 text_color=("white", "black")
                                 )
-        self.label2.grid(row=0, column=0, padx=30, pady=0)
+        self.tabTime.grid(row=0, column=0, padx=30, pady=20)
         
         self.text_var2 = ctk.IntVar()
 
         #Color 
-        button3 = ctk.CTkButton(None, text="Color", width=20, height=25,corner_radius=30 , command=color)
-        
-        
-        button3.place(relx=0.19, rely=0.9, anchor=tk.S)
-        
+        colorMode = ctk.CTkButton(None, text="Color", width=20, height=25,corner_radius=30 , command=color, fg_color="#5bc0de", text_color="black")
+        colorMode.place(relx=0.15, rely=0.95, anchor=tk.S)
 
+        defaultMode = ctk.CTkButton(None, text="Default", width=20, height=25,corner_radius=30, command=default)
+        defaultMode.place(relx=0.26, rely=0.95, anchor=tk.S)
+
+        clearMode = ctk.CTkButton(None, text="Clear", width=20, height=25,corner_radius=30, command=transparent, fg_color="transparent", text_color=("black", "white"))
+        clearMode.place(relx=0.37, rely=0.95, anchor=tk.S)
+        
+    def reset(self):
+        self.text_var.set(0)
+        self.tabCounter.configure(text=str(self.text_var.get()))
+
+
+
+    #StopWatch Sequence
 
     def stopngo(self):
             if not self.running:
@@ -128,22 +145,17 @@ class TabViewTime(ctk.CTkTabview):
                     self.start_time += paused_time
 
                 self.running = True
-                self.button4.configure(text="Stop")
+                self.stopStart.configure(text="Stop", fg_color="#d9534f")
                 self.update_time()
             else:
                 self.pause_time = datetime.now()
                 self.running = False
-                self.button4.configure(text="Start")
-
-    def reset(self):
-            self.text_var.set(0)
-            self.label.configure(text=str(self.text_var.get()))
-
+                self.stopStart.configure(text="Start", fg_color="#5cb85c")
             
 
     def timeReset(self):
         self.running = False
-        self.button4.configure(text="Start")
+        self.stopStart.configure(text="Start", fg_color="#5cb85c")
         self.start_time = None
         self.update_display()
 
@@ -152,11 +164,11 @@ class TabViewTime(ctk.CTkTabview):
         if self.running:
             elapsed = datetime.now() - self.start_time
             formatted_time = self.format_time(elapsed)
-            self.label2.configure(text=formatted_time)
+            self.tabTime.configure(text=formatted_time)
             self.after(50, self.update_time)
         
     def update_display(self):
-        self.label2.configure(text="0:00:00.000")
+        self.tabTime.configure(text="0:00:00.000")
 
     def format_time(self, elapsed):
         total_seconds = elapsed.total_seconds()
