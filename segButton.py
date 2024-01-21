@@ -13,8 +13,8 @@ def segmented_button():
             ctk.set_appearance_mode("system")
             
     my_button = ctk.CTkSegmentedButton(master=None, values=["Dark", "Light"],
-                                                     command=segmented_button_callback, corner_radius=20, selected_color=("#E7F6F2", "#395B64"), text_color=("black", "white"))
+                                                     command=segmented_button_callback, corner_radius=20, selected_color=("#E7F6F2", "#395B64"), text_color=("black", "white"), height=20)
 
     my_button.set("Value 1")
-    my_button.grid(row=0, column=0, padx=0, pady=10, sticky="snew")
+    my_button.grid(row=0, column=0, padx=0, pady=0, sticky="snew")
             # Modes: system (default), light, dark
