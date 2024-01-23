@@ -11,7 +11,7 @@ class TabViewTime(ctk.CTkTabview):
         # add widgets onto the frame, for example:
 
         
-        my_tabs = ["Counter", "Timer"]
+        my_tabs = ["COUNTER", "STOPWATCH"]
 
         counterTab = self.add(my_tabs[0])
         timeTab = self.add(my_tabs[1])
@@ -52,6 +52,35 @@ class TabViewTime(ctk.CTkTabview):
                 self.text_var.set(current_value - 1)
                 self.tabCounter.configure(text=str(self.text_var.get()))
 
+        def appliedValue():
+            
+            
+            def charLoop(myEntry) :
+                i = 0
+                while i < 100:
+                    i += 1
+                    if i == myEntry:
+                        break
+                return self.entryAdded.delete(0, i)
+                
+
+            entrylen = len(self.entryAdded.get())
+            try:
+                value = int(self.entryAdded.get())
+                
+                if value < 0:
+                    print("Error: No Negative Numbers")
+                    charLoop(entrylen)
+                    # self.entryAdded.delete(0, max(entrylen))
+                else: 
+                    self.text_var.set(value)
+                    self.tabCounter.configure(text=str(self.entryAdded.get()))
+                    charLoop(entrylen)
+            except ValueError:
+                charLoop(entrylen)
+                print("Error: Please enter a whole number")
+
+
             
         self.text_var = ctk.IntVar()
 
@@ -65,15 +94,18 @@ class TabViewTime(ctk.CTkTabview):
                                text_color=("white", "black")
                                 )
 
+        
 
         self.tabCounter.grid(row=0, column=0, padx=30, pady=20)
                 
-        self.buttonPlus = ctk.CTkButton(self.tab("Counter"), text="+", font=("Times",30,'bold'), width=40, height=25,
+        self.buttonPlus = ctk.CTkButton(counterTab, text="+", font=("Times",30,'bold'), width=40, height=25,
                                command=plus, fg_color="#5cb85c", text_color="black" )
 
-        self.buttonMinus = ctk.CTkButton(self.tab("Counter"), text="-", font=("Times",30,'bold'), width=40, height=25,
+        self.buttonMinus = ctk.CTkButton(counterTab, text="-", font=("Times",30,'bold'), width=40, height=25,
                                 command=minus, fg_color="#d9534f", text_color="black" )
         
+        self.entryAdded = ctk.CTkEntry(counterTab, width=70, height=25)
+        self.entryButton = ctk.CTkButton(counterTab, text="Apply", width=15, height=25, command=appliedValue)
 
         self.buttonPlus.grid(row=1, column=0, padx=30, pady=0)
         self.buttonPlus.place(relx=0.9, rely=0.75, anchor=tk.SE)
@@ -81,10 +113,14 @@ class TabViewTime(ctk.CTkTabview):
         self.buttonMinus.grid(row=1, column=0, padx=0, pady=0)
         self.buttonMinus.place(relx=0.1, rely=0.75, anchor=tk.SW)
 
-        counterReset = ctk.CTkButton(counterTab, text="Reset", height=35, command= self.reset)
+        self.entryAdded.grid(row=1, column=0, padx=0, pady=0)
+        self.entryAdded.place(relx=0.30, rely=0.73, anchor=tk.SW)
+
+        self.entryButton.grid(row=1, column=0, padx=0, pady=0)
+        self.entryButton.place(relx=0.54, rely=0.73, anchor=tk.SW)
+
+        counterReset = ctk.CTkButton(counterTab, text="Reset", height=30, command= self.reset)
         counterReset.grid(row=2, column=0, padx=0, pady=35)
-
-
 
 
 
@@ -95,12 +131,12 @@ class TabViewTime(ctk.CTkTabview):
         self.start_time = None  #Default Start Time
         self.pause_time = None
 
-        self.stopStart = ctk.CTkButton(timeTab, text="Start", font=custom_font2, width=40, height=25, command=self.stopngo, fg_color="#5cb85c")
+        self.stopStart = ctk.CTkButton(timeTab, text="Start", font=custom_font2, width=40, height=30, command=self.stopngo, fg_color="#5cb85c")
         self.stopStart.grid(row=1, column=0, padx=30, pady=0)
         self.stopStart.place(relx=0.5, rely=0.71, anchor=tk.S)
 
 
-        self.button6 = ctk.CTkButton(timeTab, text="Reset", height=35, command= self.timeReset)
+        self.button6 = ctk.CTkButton(timeTab, text="Reset", height=30, command= self.timeReset)
         self.button6.grid(row=2, column=0, padx=0, pady=35)
 
         self.string_var = ctk.StringVar(value="black")
