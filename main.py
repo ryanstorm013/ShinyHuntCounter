@@ -1,9 +1,11 @@
+from playsound import playsound
 import tkinter as tk
 import customtkinter as ctk
 from PIL import Image
 from myFrame import *
 from segButton import *
 from tab import *
+
 
 # import ttkbootstrap as ttk
 
@@ -37,9 +39,10 @@ class App(ctk.CTk, tk.Frame):
         
 
 
+
 app = App()
 app.title('Shny Counter')
+playsound('sound effects\GUI save game.wav')
 app.resizable(0, 0)
-
 app.mainloop()
 

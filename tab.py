@@ -1,7 +1,8 @@
 import tkinter as tk
 import customtkinter as ctk
-from tkinter import colorchooser
+from tkinter import colorchooser, messagebox
 from datetime import datetime
+
 
 class TabViewTime(ctk.CTkTabview):
     def __init__(self, master, **kwargs):
@@ -19,8 +20,8 @@ class TabViewTime(ctk.CTkTabview):
         
         def color():
             my_color = colorchooser.askcolor("black")
+            
             valueStore = my_color[1]
-            # print(my_color)
             try:
                 if valueStore == '#000000' or valueStore == '#ffffff':
                     default()
@@ -29,6 +30,7 @@ class TabViewTime(ctk.CTkTabview):
                     self.tabTime.configure(fg_color=valueStore)
             except ValueError:
                 pass
+            
         
         def default():
             self.tabCounter.configure(fg_color=("black", "white"), text_color=("white", "black"))
@@ -45,6 +47,7 @@ class TabViewTime(ctk.CTkTabview):
             
             
         def minus():
+            
             current_value = self.text_var.get()
             if current_value == 0:
                 self.text_var.set(0)
@@ -70,6 +73,7 @@ class TabViewTime(ctk.CTkTabview):
                 
                 if value < 0:
                     print("Error: No Negative Numbers")
+                    messagebox.showerror('Error', "Please enter positive numbers!")
                     charLoop(entrylen)
                     # self.entryAdded.delete(0, max(entrylen))
                 else: 
@@ -78,6 +82,7 @@ class TabViewTime(ctk.CTkTabview):
                     charLoop(entrylen)
             except ValueError:
                 charLoop(entrylen)
+                messagebox.showerror('Error', "Please enter whole numbers!")
                 print("Error: Please enter a whole number")
 
 
@@ -94,7 +99,11 @@ class TabViewTime(ctk.CTkTabview):
                                text_color=("white", "black")
                                 )
 
-        
+
+
+
+
+        #Counter    
 
         self.tabCounter.grid(row=0, column=0, padx=30, pady=20)
                 
@@ -124,7 +133,7 @@ class TabViewTime(ctk.CTkTabview):
 
 
 
-
+        #Stop Watch
 
 
         self.running = False    #Defailt Running
@@ -154,6 +163,12 @@ class TabViewTime(ctk.CTkTabview):
         
         self.text_var2 = ctk.IntVar()
 
+
+
+
+
+
+
         #Color 
         colorMode = ctk.CTkButton(None, text="Color", width=20, height=25,corner_radius=30 , command=color, fg_color="#5bc0de", text_color="black")
         colorMode.place(relx=0.15, rely=0.95, anchor=tk.S)
@@ -173,20 +188,20 @@ class TabViewTime(ctk.CTkTabview):
     #StopWatch Sequence
 
     def stopngo(self):
-            if not self.running:
-                if self.start_time is None:
-                    self.start_time = datetime.now()
-                else:
-                    paused_time = datetime.now() - self.pause_time
-                    self.start_time += paused_time
-
-                self.running = True
-                self.stopStart.configure(text="Stop", fg_color="#d9534f")
-                self.update_time()
+        if not self.running:
+            if self.start_time is None:
+                self.start_time = datetime.now()
             else:
-                self.pause_time = datetime.now()
-                self.running = False
-                self.stopStart.configure(text="Start", fg_color="#5cb85c")
+                paused_time = datetime.now() - self.pause_time
+                self.start_time += paused_time
+
+            self.running = True
+            self.stopStart.configure(text="Stop", fg_color="#d9534f")
+            self.update_time()
+        else:
+            self.pause_time = datetime.now()
+            self.running = False
+            self.stopStart.configure(text="Start", fg_color="#5cb85c")
             
 
     def timeReset(self):
@@ -213,4 +228,7 @@ class TabViewTime(ctk.CTkTabview):
         milliseconds = int((total_seconds - int(total_seconds)) * 1000)
         formatted_time = f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}.{milliseconds:03d}"
         return formatted_time
+    
+    def soundPlay(self, link):
+        playsound(link)
 
