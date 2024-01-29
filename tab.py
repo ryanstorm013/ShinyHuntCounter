@@ -229,6 +229,5 @@ class TabViewTime(ctk.CTkTabview):
         formatted_time = f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}.{milliseconds:03d}"
         return formatted_time
     
-    def soundPlay(self, link):
-        playsound(link)
+
 
