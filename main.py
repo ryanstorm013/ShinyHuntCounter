@@ -42,7 +42,7 @@ class App(ctk.CTk, tk.Frame):
 
 app = App()
 app.title('Shny Counter')
-playsound('sound effects\GUI save game.wav')
+# playsound('sound effects\GUI save game.wav')
 app.resizable(0, 0)
 app.mainloop()
 
